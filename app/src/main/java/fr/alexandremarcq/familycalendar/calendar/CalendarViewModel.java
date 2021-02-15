@@ -12,8 +12,8 @@ public class CalendarViewModel extends ViewModel {
     private MutableLiveData<Integer> _number = new MutableLiveData<>();
     public LiveData<Integer> mNumber = _number;
 
-    private MutableLiveData<String> _month = new MutableLiveData<>();
-    public LiveData<String> mMonth = _month;
+    private MutableLiveData<Integer> _month = new MutableLiveData<>();
+    public LiveData<Integer> mMonth = _month;
 
     public CalendarViewModel(long time) {
         int[] date = UtilsFunctions.dateConverter(time);
@@ -36,6 +36,6 @@ public class CalendarViewModel extends ViewModel {
                 "Novembre",
                 "Décembre"
         };
-        _month.postValue(months[month]);
+        _month.postValue(month);
     }
 }
