@@ -5,6 +5,8 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import fr.alexandremarcq.familycalendar.utils.UtilsFunctions;
+
 public class CalendarViewModel extends ViewModel {
 
     private MutableLiveData<Integer> _number = new MutableLiveData<>();
@@ -13,12 +15,13 @@ public class CalendarViewModel extends ViewModel {
     private MutableLiveData<String> _month = new MutableLiveData<>();
     public LiveData<String> mMonth = _month;
 
-    public CalendarViewModel(Integer number, int month) {
-        setDate(number, month);
+    public CalendarViewModel(long time) {
+        int[] date = UtilsFunctions.dateConverter(time);
+        setDate(date[0], date[1]);
     }
 
-    public void setDate(int month, int dayOfMonth) {
-        _number.postValue(dayOfMonth);
+    public void setDate(int day, int month) {
+        _number.postValue(day);
         String[] months = {
                 "Janvier",
                 "Février",

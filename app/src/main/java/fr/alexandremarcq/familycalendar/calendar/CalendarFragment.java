@@ -27,15 +27,14 @@ public class CalendarFragment extends Fragment {
         mBinding = FragmentCalendarBinding.inflate(inflater);
 
         mViewModel = new CalendarViewModelFactory(
-                1,
-                1
+                mBinding.calendarView.getDate()
         ).create(CalendarViewModel.class);
 
         mBinding.setLifecycleOwner(getViewLifecycleOwner());
         mBinding.setViewModel(mViewModel);
 
         mBinding.calendarView.setOnDateChangeListener((view, year, month, dayOfMonth) ->
-                mViewModel.setDate(month, dayOfMonth)
+                mViewModel.setDate(dayOfMonth, month)
         );
 
         return mBinding.getRoot();

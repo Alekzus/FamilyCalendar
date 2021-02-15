@@ -6,12 +6,10 @@ import androidx.lifecycle.ViewModelProvider;
 
 public class CalendarViewModelFactory implements ViewModelProvider.Factory {
 
-    private int mDay;
-    private int mMonth;
+    private long mTime;
 
-    public CalendarViewModelFactory(int day, int month) {
-        mDay = day;
-        mMonth = month;
+    public CalendarViewModelFactory(long milliSeconds) {
+        mTime = milliSeconds;
     }
 
     @SuppressWarnings("unchecked")
@@ -19,7 +17,7 @@ public class CalendarViewModelFactory implements ViewModelProvider.Factory {
     @Override
     public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
         if (modelClass.isAssignableFrom(CalendarViewModel.class)) {
-            return (T) new CalendarViewModel(mDay, mMonth);
+            return (T) new CalendarViewModel(mTime);
         }
         throw new IllegalArgumentException("Unknown class");
     }
