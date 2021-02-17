@@ -9,7 +9,7 @@ import fr.alexandremarcq.familycalendar.R;
 
 public class BindingAdapters {
 
-    @BindingAdapter({"bind:context", "bind:month"})
+    @BindingAdapter({"context", "month"})
     public static void bindMonth(TextView textView, Context context, int month) {
         textView.setText(
                 context.getResources().getTextArray(
