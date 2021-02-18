@@ -4,14 +4,11 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 @Entity
-public class Event {
+public class EventPerson {
     @PrimaryKey(autoGenerate = true)
     public int id;
 
-    public String title;
-    public String object;
-    public String type;
-    public String date;
-    public String startTime;
-    public String endTime;
+    public int idEvent;
+    public int idPerson;
+    public boolean accepted;
 }
