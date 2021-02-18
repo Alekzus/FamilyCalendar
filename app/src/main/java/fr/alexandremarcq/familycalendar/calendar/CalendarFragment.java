@@ -34,7 +34,7 @@ public class CalendarFragment extends Fragment {
         mBinding.calendarView.setOnDateChangeListener((view, year, month, dayOfMonth) -> mViewModel.setDate(dayOfMonth, month));
 
         mBinding.addButton.setOnClickListener(view ->
-            Navigation.findNavController(view).navigate(R.id.action_addEvent);
+            Navigation.findNavController(view).navigate(R.id.action_addEvent)
         );
         return mBinding.getRoot();
     }
