@@ -12,4 +12,15 @@
     <string name="october">October</string>
     <string name="november">November</string>
     <string name="december">December</string>
+    <string name="title">Title</string>
+    <string name="enter_name">Name of the event</string>
+    <string name="object">Object</string>
+    <string name="enter_object">Object of the event</string>
+    <string name="date">Date</string>
+    <string name="all_day">All day</string>
+    <string name="from">From</string>
+    <string name="to">To</string>
+    <string name="default_date" translatable="false">%1$02d/%2$02d/%3$d</string>
+    <string name="back">Back</string>
+    <string name="done">Done</string>
 </resources>

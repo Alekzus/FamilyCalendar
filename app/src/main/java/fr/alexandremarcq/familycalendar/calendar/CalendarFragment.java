@@ -2,14 +2,12 @@ package fr.alexandremarcq.familycalendar.calendar;
 
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CalendarView;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -33,10 +31,11 @@ public class CalendarFragment extends Fragment {
         mBinding.setLifecycleOwner(getViewLifecycleOwner());
         mBinding.setViewModel(mViewModel);
 
-        mBinding.calendarView.setOnDateChangeListener((view, year, month, dayOfMonth) ->
-                mViewModel.setDate(dayOfMonth, month)
-        );
+        mBinding.calendarView.setOnDateChangeListener((view, year, month, dayOfMonth) -> mViewModel.setDate(dayOfMonth, month));
 
+        mBinding.addButton.setOnClickListener(view ->
+            Navigation.findNavController(view).navigate(R.id.action_addEvent)
+        );
         return mBinding.getRoot();
     }
 }
