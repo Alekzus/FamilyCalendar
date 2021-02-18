@@ -23,4 +23,8 @@
     <string name="default_date" translatable="false">%1$02d/%2$02d/%3$d</string>
     <string name="back">Back</string>
     <string name="done">Done</string>
+    <string name="new_event">New event</string>
+    <string name="new_birthday">New birthday</string>
+    <string name="new_contact">New contact</string>
+    <string name="home">Home</string>
 </resources>
