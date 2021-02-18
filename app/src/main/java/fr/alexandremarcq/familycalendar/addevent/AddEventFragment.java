@@ -1,6 +1,7 @@
 package fr.alexandremarcq.familycalendar.addevent;
 
 import androidx.annotation.RequiresApi;
+import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.os.Build;
@@ -9,6 +10,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -23,17 +25,20 @@ public class AddEventFragment extends Fragment {
 
     private FragmentAddEventBinding mBinding;
     private AddEventViewModel mViewModel;
+    private LifecycleOwner mOwner;
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
 
+        mOwner = getViewLifecycleOwner();
+
         mBinding = FragmentAddEventBinding.inflate(inflater);
 
         mViewModel = new ViewModelProvider(this).get(AddEventViewModel.class);
 
-        mBinding.setLifecycleOwner(getViewLifecycleOwner());
+        mBinding.setLifecycleOwner(mOwner);
 
         mBinding.allDayCheck.setOnClickListener(view -> mViewModel.checkOnAllDay());
 
@@ -50,13 +55,17 @@ public class AddEventFragment extends Fragment {
                         hourOfDay, minute)
         );
 
-        mViewModel.mAllDayChecked.observe(getViewLifecycleOwner(), it -> {
+        mBinding.backButton.setOnClickListener(view ->
+                Navigation.findNavController(view).popBackStack()
+        );
+
+        mViewModel.mAllDayChecked.observe(mOwner, it -> {
             mBinding.fromPicker.setEnabled(!it);
             mBinding.toPicker.setEnabled(!it);
         });
 
-        mViewModel.mTimeIsValid.observe(getViewLifecycleOwner(), it ->
-                Log.d("TEST", "checkTime result: " + it)
+        mViewModel.mTimeIsValid.observe(mOwner, it ->
+                mBinding.doneButton.setEnabled(it)
         );
 
         return mBinding.getRoot();
