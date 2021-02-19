@@ -35,6 +35,12 @@ public class BirthdayFragment extends Fragment {
 
         mViewModel = new ViewModelProvider(this).get(BirthdayViewModel.class);
 
+        mBinding.bdayDoneButton.setOnClickListener(view -> {
+            mViewModel.addBirthday("Anniversaire de "+mBinding.bdayNameBox.getText().toString(),mBinding.bdayDateBox.getText().toString());
+            mBinding.bdayNameBox.setText("");
+            mBinding.bdayDateBox.setText("");
+        });
+
         return mBinding.getRoot();
     }
 }

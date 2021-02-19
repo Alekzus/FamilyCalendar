@@ -30,6 +30,13 @@ public class ContactFragment extends Fragment {
 
         mViewModel = new ViewModelProvider(this).get(ContactViewModel.class);
 
+        mBinding.contactDoneButton.setOnClickListener(view -> {
+            mViewModel.addPerson(mBinding.contactNameBox.getText().toString(),mBinding.contactName2Box.getText().toString(),mBinding.contactPhoneBox.getText().toString());
+            mBinding.contactNameBox.setText("");
+            mBinding.contactName2Box.setText("");
+            mBinding.contactPhoneBox.setText("");
+        });
+
         return mBinding.getRoot();
     }
 }
