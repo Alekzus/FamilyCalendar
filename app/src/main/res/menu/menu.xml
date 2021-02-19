@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@id/calendarFragment"
+        android:icon="@drawable/ic_baseline_calendar_today_24"
+        android:title="@string/home" />
+    <item
+        android:id="@id/addEventFragment"
+        android:icon="@drawable/ic_baseline_add_circle_outline_24"
+        android:title="@string/new_event" />
+    <item
+        android:id="@+id/menu_new_bday"
+        android:icon="@drawable/ic_baseline_cake_24"
+        android:title="@string/new_birthday" />
+    <item
+        android:id="@+id/menu_new_contact"
+        android:icon="@drawable/ic_baseline_person_add_24"
+        android:title="@string/new_contact" />
+</menu>
