@@ -45,11 +45,6 @@ public class AddEventViewModel extends AndroidViewModel {
 
         EventDao e = db.eventDao();
 
-        AsyncTask.execute(new Runnable() {
-            @Override
-          public void run() {
-              e.insert(new Event(title,object,type,date,startTime,endTime));
-          }
-        });
+        AsyncTask.execute(() -> e.insert(new Event(title,object,type,date,startTime,endTime)));
     }
 }

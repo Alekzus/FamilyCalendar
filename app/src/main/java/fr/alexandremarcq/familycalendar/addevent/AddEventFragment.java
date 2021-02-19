@@ -63,7 +63,12 @@ public class AddEventFragment extends Fragment {
                 mBinding.doneButton.setEnabled(it)
         );
 
-        mBinding.doneButton.setOnClickListener(view -> mViewModel.addEvent(mBinding.titleBox.getText().toString(),mBinding.objectBox.getText().toString(), null, mBinding.dateBox.getText().toString(), String.valueOf(mBinding.fromPicker.getHour())+":"+String.valueOf(mBinding.fromPicker.getMinute()),String.valueOf(mBinding.toPicker.getHour())+":"+String.valueOf(mBinding.toPicker.getMinute())));
+        mBinding.doneButton.setOnClickListener(view -> {
+            mViewModel.addEvent(mBinding.titleBox.getText().toString(),mBinding.objectBox.getText().toString(), null, mBinding.dateBox.getText().toString(), String.valueOf(mBinding.fromPicker.getHour())+":"+String.valueOf(mBinding.fromPicker.getMinute()),String.valueOf(mBinding.toPicker.getHour())+":"+String.valueOf(mBinding.toPicker.getMinute()));
+            mBinding.titleBox.setText("");
+            mBinding.objectBox.setText("");
+            mBinding.dateBox.setText("");
+        });
 
         return mBinding.getRoot();
     }
