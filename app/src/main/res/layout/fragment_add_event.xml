@@ -144,25 +144,13 @@
                 app:layout_constraintTop_toTopOf="@+id/from_picker" />
 
             <Button
-                android:id="@+id/back_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/back"
-                app:layout_constraintBottom_toBottomOf="@+id/done_button"
-                app:layout_constraintEnd_toStartOf="@+id/done_button"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/done_button" />
-
-            <Button
                 android:id="@+id/done_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:text="@string/done"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/back_button"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/all_day_check" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
