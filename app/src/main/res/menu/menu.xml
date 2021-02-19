@@ -13,7 +13,7 @@
         android:icon="@drawable/ic_baseline_cake_24"
         android:title="@string/new_birthday" />
     <item
-        android:id="@+id/menu_new_contact"
+        android:id="@id/contactFragment"
         android:icon="@drawable/ic_baseline_person_add_24"
         android:title="@string/new_contact" />
 </menu>

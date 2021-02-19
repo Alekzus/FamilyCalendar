@@ -29,4 +29,9 @@
     <string name="home">Home</string>
     <string name="name">Name</string>
     <string name="name_of_the_contact">Name of the contact</string>
+    <string name="last_name">Last name</string>
+    <string name="first_name">First name</string>
+    <string name="phone_number">Phone number</string>
+    <string name="last_name_of_contact">Last name of the contact</string>
+    <string name="first_name_of_contact">First name of the contact</string>
 </resources>
