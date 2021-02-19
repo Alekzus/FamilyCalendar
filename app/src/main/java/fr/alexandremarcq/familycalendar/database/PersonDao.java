@@ -11,7 +11,7 @@ import java.util.List;
 @Dao
 public interface PersonDao {
     @Insert
-    void insertAll(Person... persons);
+    void insert(Person person);
 
     @Delete
     void delete(Person person);

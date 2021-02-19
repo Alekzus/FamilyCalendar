@@ -1,5 +1,6 @@
 package fr.alexandremarcq.familycalendar;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -8,6 +9,10 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.NavigationUI;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+
+import fr.alexandremarcq.familycalendar.database.CalendarDatabase;
+import fr.alexandremarcq.familycalendar.database.Person;
+import fr.alexandremarcq.familycalendar.database.PersonDao;
 
 
 public class MainActivity extends AppCompatActivity {

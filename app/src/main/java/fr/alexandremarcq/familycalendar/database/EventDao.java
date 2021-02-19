@@ -10,7 +10,7 @@ import java.util.List;
 @Dao
 public interface EventDao {
     @Insert
-    void insertAll(Event... events);
+    void insert(Event event);
 
     @Delete
     void delete(Event event);

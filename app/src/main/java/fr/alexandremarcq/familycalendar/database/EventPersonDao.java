@@ -10,7 +10,7 @@ import java.util.List;
 @Dao
 public interface EventPersonDao {
     @Insert
-    void insertAll(EventPerson... eventpersons);
+    void insert(EventPerson eventperson);
 
     @Delete
     void delete(EventPerson eventPerson);
