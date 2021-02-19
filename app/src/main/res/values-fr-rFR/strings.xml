@@ -23,7 +23,10 @@
     <string name="to">Fin</string>
     <string name="back">Retour</string>
     <string name="done">Ajouter</string>
-    <string name="new_event">Nouvel évènement</string>
-    <string name="new_birthday">Nouvel anniversaire</string>
-    <string name="new_contact">Nouveau contact</string>
+    <string name="new_event">Evènement</string>
+    <string name="new_birthday">Anniversaire</string>
+    <string name="new_contact">Contact</string>
+    <string name="home">Accueil</string>
+    <string name="name">Nom</string>
+    <string name="name_of_the_contact">Nom du contact</string>
 </resources>

@@ -9,7 +9,7 @@
         android:icon="@drawable/ic_baseline_add_circle_outline_24"
         android:title="@string/new_event" />
     <item
-        android:id="@+id/menu_new_bday"
+        android:id="@id/birthdayFragment"
         android:icon="@drawable/ic_baseline_cake_24"
         android:title="@string/new_birthday" />
     <item

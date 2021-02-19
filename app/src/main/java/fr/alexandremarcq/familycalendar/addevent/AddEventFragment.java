@@ -35,10 +35,9 @@ public class AddEventFragment extends Fragment {
         mOwner = getViewLifecycleOwner();
 
         mBinding = FragmentAddEventBinding.inflate(inflater);
+        mBinding.setLifecycleOwner(mOwner);
 
         mViewModel = new ViewModelProvider(this).get(AddEventViewModel.class);
-
-        mBinding.setLifecycleOwner(mOwner);
 
         mBinding.allDayCheck.setOnClickListener(view -> mViewModel.checkOnAllDay());
 
@@ -53,10 +52,6 @@ public class AddEventFragment extends Fragment {
         mBinding.toPicker.setOnTimeChangedListener((view, hourOfDay, minute) ->
                 mViewModel.checkTime(mBinding.fromPicker.getHour(), mBinding.fromPicker.getMinute(),
                         hourOfDay, minute)
-        );
-
-        mBinding.backButton.setOnClickListener(view ->
-                Navigation.findNavController(view).popBackStack()
         );
 
         mViewModel.mAllDayChecked.observe(mOwner, it -> {
