@@ -17,5 +17,14 @@
             android:id="@+id/action_addEvent"
             app:destination="@id/addEventFragment"
             app:popUpTo="@id/calendarFragment" />
+        <action
+            android:id="@+id/action_calendarFragment_to_birthdayFragment"
+            app:destination="@id/birthdayFragment"
+            app:popUpTo="@id/calendarFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/birthdayFragment"
+        android:name="fr.alexandremarcq.familycalendar.birthday.BirthdayFragment"
+        android:label="birthday_fragment"
+        tools:layout="@layout/fragment_birthday" />
 </navigation>
