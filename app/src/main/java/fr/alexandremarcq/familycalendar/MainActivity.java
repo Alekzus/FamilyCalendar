@@ -14,9 +14,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //CalendarDatabase db = CalendarDatabase.getInstance(getApplicationContext());
-        //PersonDao personDao = db.personDao();
-        //Person p = new Person("Alexandre","MARCQ","0782364596");
-        //personDao.insertAll(p);
+
     }
 }
