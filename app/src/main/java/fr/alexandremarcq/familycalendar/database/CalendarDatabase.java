@@ -14,14 +14,12 @@ public abstract class CalendarDatabase extends RoomDatabase {
     private static final String DB_NAME = "calendarDatabase.db";
     private static volatile CalendarDatabase instance;
 
-    static synchronized CalendarDatabase getInstance(Context context) {
+    public static synchronized CalendarDatabase getInstance(Context context) {
         if (instance == null) {
             instance = create(context);
         }
         return instance;
     }
-
-    private CalendarDatabase() {};
 
     private static CalendarDatabase create(final Context context) {
         return Room.databaseBuilder(

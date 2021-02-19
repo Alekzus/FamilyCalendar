@@ -1,5 +1,6 @@
 package fr.alexandremarcq.familycalendar.database;
 
+import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
@@ -16,5 +17,5 @@ public interface PersonDao {
     void delete(Person person);
 
     @Query("SELECT * FROM person")
-    List<Person> getAll();
+    LiveData<List<Person>> getAll();
 }
