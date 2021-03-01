@@ -1,5 +1,6 @@
-package fr.alexandremarcq.familycalendar.database;
+package fr.alexandremarcq.familycalendar.database.event;
 
+import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
@@ -17,4 +18,7 @@ public interface EventDao {
 
     @Query("SELECT * FROM event")
     List<Event> getAll();
+
+    @Query("SELECT * FROM event WHERE date LIKE :date")
+    List<Event> getEventsByDate(String date);
 }

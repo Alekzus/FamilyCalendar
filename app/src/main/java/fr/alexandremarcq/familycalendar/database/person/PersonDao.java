@@ -1,4 +1,4 @@
-package fr.alexandremarcq.familycalendar.database;
+package fr.alexandremarcq.familycalendar.database.person;
 
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;

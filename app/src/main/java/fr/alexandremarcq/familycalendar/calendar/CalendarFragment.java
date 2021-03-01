@@ -1,53 +1,61 @@
 package fr.alexandremarcq.familycalendar.calendar;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.fragment.NavHostFragment;
-import androidx.navigation.ui.NavigationUI;
-
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Toast;
+import androidx.lifecycle.LifecycleOwner;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import org.jetbrains.annotations.NotNull;
 
 import fr.alexandremarcq.familycalendar.R;
+import fr.alexandremarcq.familycalendar.database.CalendarDatabase;
 import fr.alexandremarcq.familycalendar.databinding.FragmentCalendarBinding;
 
 public class CalendarFragment extends Fragment {
 
     private FragmentCalendarBinding mBinding;
     private CalendarViewModel mViewModel;
+    private LifecycleOwner mOwner;
+    private EventAdapter mAdapter;
 
     @Override
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        mOwner = getViewLifecycleOwner();
+
         mBinding = FragmentCalendarBinding.inflate(inflater);
 
         mViewModel = new CalendarViewModelFactory(
+                CalendarDatabase.getInstance(getContext()),
                 mBinding.calendarView.getDate()
         ).create(CalendarViewModel.class);
 
-        mBinding.setLifecycleOwner(getViewLifecycleOwner());
+        mBinding.setLifecycleOwner(mOwner);
         mBinding.setViewModel(mViewModel);
 
-        mBinding.calendarView.setOnDateChangeListener((view, year, month, dayOfMonth) -> mViewModel.setDate(dayOfMonth, month));
+        mAdapter = new EventAdapter();
+
+        mBinding.recyclerView.setAdapter(mAdapter);
+        mBinding.recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        mBinding.calendarView.setOnDateChangeListener((view, year, month, dayOfMonth) -> {
+            mViewModel.setDate(dayOfMonth, month, year);
+            mBinding.recyclerView.getAdapter().notifyDataSetChanged();
+        });
+
+        mViewModel.mEvents.observe(mOwner, events ->
+                mAdapter.submitList(events)
+        );
 
         return mBinding.getRoot();
-    }
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
     }
 
     @Override
