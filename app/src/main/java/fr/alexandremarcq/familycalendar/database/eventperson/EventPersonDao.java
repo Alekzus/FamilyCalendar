@@ -1,4 +1,4 @@
-package fr.alexandremarcq.familycalendar.database;
+package fr.alexandremarcq.familycalendar.database.eventperson;
 
 import androidx.room.Dao;
 import androidx.room.Delete;
