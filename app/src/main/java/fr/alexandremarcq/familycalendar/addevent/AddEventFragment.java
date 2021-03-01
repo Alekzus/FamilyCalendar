@@ -16,6 +16,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 
 import fr.alexandremarcq.familycalendar.R;
@@ -69,6 +70,11 @@ public class AddEventFragment extends Fragment {
             mBinding.objectBox.setText("");
             mBinding.dateBox.setText("");
         });
+
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity().getApplicationContext(),
+                R.array.types, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        mBinding.typeBox.setAdapter(adapter);
 
         return mBinding.getRoot();
     }
