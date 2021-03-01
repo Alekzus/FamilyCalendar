@@ -34,4 +34,5 @@
     <string name="phone_number">Phone number</string>
     <string name="last_name_of_contact">Last name of the contact</string>
     <string name="first_name_of_contact">First name of the contact</string>
+    <string name="event_period" translatable="false">%1$s - %2$s</string>
 </resources>
