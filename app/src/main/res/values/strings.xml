@@ -15,6 +15,8 @@
     <string name="title">Title</string>
     <string name="enter_name">Name of the event</string>
     <string name="object">Object</string>
+    <string name="type">Type</string>
+    <string name="person">Person</string>
     <string name="enter_object">Object of the event</string>
     <string name="date">Date</string>
     <string name="all_day">All day</string>
