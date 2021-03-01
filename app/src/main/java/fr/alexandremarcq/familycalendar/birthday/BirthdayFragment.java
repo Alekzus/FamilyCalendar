@@ -1,22 +1,18 @@
 package fr.alexandremarcq.familycalendar.birthday;
 
-import androidx.lifecycle.LifecycleOwner;
-import androidx.lifecycle.ViewModelProvider;
-
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.navigation.Navigation;
-import androidx.navigation.ui.NavigationUI;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import fr.alexandremarcq.familycalendar.R;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LifecycleOwner;
+
+import fr.alexandremarcq.familycalendar.database.CalendarDatabase;
 import fr.alexandremarcq.familycalendar.databinding.FragmentBirthdayBinding;
+import fr.alexandremarcq.familycalendar.utils.ViewModelFactory;
 
 public class BirthdayFragment extends Fragment {
 
@@ -33,10 +29,12 @@ public class BirthdayFragment extends Fragment {
         mBinding = FragmentBirthdayBinding.inflate(inflater);
         mBinding.setLifecycleOwner(mOwner);
 
-        mViewModel = new ViewModelProvider(this).get(BirthdayViewModel.class);
+        mViewModel = new ViewModelFactory(
+                CalendarDatabase.getInstance(getContext())
+        ).create(BirthdayViewModel.class);
 
         mBinding.bdayDoneButton.setOnClickListener(view -> {
-            mViewModel.addBirthday("Anniversaire de "+mBinding.bdayNameBox.getText().toString(),mBinding.bdayDateBox.getText().toString());
+            mViewModel.addBirthday("Anniversaire de " + mBinding.bdayNameBox.getText().toString(), mBinding.bdayDateBox.getText().toString());
             mBinding.bdayNameBox.setText("");
             mBinding.bdayDateBox.setText("");
         });

@@ -7,8 +7,8 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 
 import fr.alexandremarcq.familycalendar.database.CalendarDatabase;
-import fr.alexandremarcq.familycalendar.database.Person;
-import fr.alexandremarcq.familycalendar.database.PersonDao;
+import fr.alexandremarcq.familycalendar.database.person.Person;
+import fr.alexandremarcq.familycalendar.database.person.PersonDao;
 
 public class ContactViewModel extends AndroidViewModel {
     public ContactViewModel(@NonNull Application application) {
