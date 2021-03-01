@@ -16,6 +16,8 @@
     <string name="title">Titre</string>
     <string name="enter_name">Nom de l\'évènement</string>
     <string name="object">Description</string>
+    <string name="type">Type</string>
+    <string name="person">Personne</string>
     <string name="enter_object">Description de l\'évènement</string>
     <string name="date">Date</string>
     <string name="all_day">Toute la journée</string>
