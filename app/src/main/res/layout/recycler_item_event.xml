@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="event"
+            type="fr.alexandremarcq.familycalendar.database.event.Event" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/event_time_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="@{@string/event_period(event.startTime, event.endTime)}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/event_name_text"
+            tools:text="8:00 - 13:00" />
+
+        <TextView
+            android:id="@+id/event_name_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@{event.title}"
+            app:layout_constraintBottom_toTopOf="@+id/event_desc_text"
+            app:layout_constraintStart_toStartOf="@+id/event_desc_text"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Réunion" />
+
+        <TextView
+            android:id="@+id/event_desc_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:text="@{event.object}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/event_time_text"
+            app:layout_constraintTop_toBottomOf="@+id/event_name_text"
+            tools:text="Réunion avec l'équipe" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
