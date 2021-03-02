@@ -17,5 +17,5 @@ public interface PersonDao {
     void delete(Person person);
 
     @Query("SELECT * FROM person")
-    LiveData<List<Person>> getAll();
+    List<Person> getAll();
 }

@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
+        <variable
+            name="viewModel"
+            type="fr.alexandremarcq.familycalendar.addevent.AddEventViewModel" />
     </data>
 
     <ScrollView
@@ -87,27 +89,6 @@
                 app:layout_constraintTop_toBottomOf="@+id/object_box" />
 
             <TextView
-                android:id="@+id/person_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/person"
-                app:layout_constraintBottom_toBottomOf="@+id/person_box"
-                app:layout_constraintStart_toStartOf="@+id/type_text"
-                app:layout_constraintTop_toTopOf="@+id/person_box" />
-
-            <Spinner
-                android:id="@+id/person_box"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="32dp"
-                android:autofillHints=""
-                android:ems="10"
-                android:gravity="start|top"
-                android:inputType="textMultiLine"
-                app:layout_constraintStart_toStartOf="@+id/type_box"
-                app:layout_constraintTop_toBottomOf="@+id/type_box" />
-
-            <TextView
                 android:id="@+id/date_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -128,7 +109,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.75"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/person_box" />
+                app:layout_constraintTop_toBottomOf="@+id/type_box" />
 
             <CheckBox
                 android:id="@+id/all_day_check"

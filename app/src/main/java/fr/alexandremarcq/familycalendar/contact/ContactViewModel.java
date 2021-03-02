@@ -1,26 +1,20 @@
 package fr.alexandremarcq.familycalendar.contact;
 
-import android.app.Application;
-import android.os.AsyncTask;
-
-import androidx.annotation.NonNull;
-import androidx.lifecycle.AndroidViewModel;
+import androidx.lifecycle.ViewModel;
 
 import fr.alexandremarcq.familycalendar.database.CalendarDatabase;
 import fr.alexandremarcq.familycalendar.database.person.Person;
-import fr.alexandremarcq.familycalendar.database.person.PersonDao;
+import fr.alexandremarcq.familycalendar.database.person.PersonRepository;
 
-public class ContactViewModel extends AndroidViewModel {
-    public ContactViewModel(@NonNull Application application) {
-        super(application);
+public class ContactViewModel extends ViewModel {
+
+    private PersonRepository mRepository;
+
+    public ContactViewModel(CalendarDatabase database) {
+        mRepository = new PersonRepository(database);
     }
-    // TODO: Implement the ViewModel
 
-    public void addPerson(String lastName, String firstName, String phoneNumber){
-        CalendarDatabase db = CalendarDatabase.getInstance(getApplication());
-
-        PersonDao p = db.personDao();
-
-        AsyncTask.execute(() -> p.insert(new Person(firstName,lastName,phoneNumber)));
+    public void addPerson(String lastName, String firstName, String phoneNumber) {
+        mRepository.insertPerson(new Person(firstName, lastName, phoneNumber));
     }
 }

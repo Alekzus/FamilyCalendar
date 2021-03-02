@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="types">
-        <item>Famille</item>
-        <item>Personnel</item>
-        <item>Professionnel</item>
+        <item>@string/family</item>
+        <item>@string/personnal</item>
+        <item>@string/professionnal</item>
     </string-array>
 </resources>
