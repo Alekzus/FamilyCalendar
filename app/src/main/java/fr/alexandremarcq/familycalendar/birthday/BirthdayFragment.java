@@ -10,6 +10,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LifecycleOwner;
 
+import java.util.regex.Pattern;
+
 import fr.alexandremarcq.familycalendar.database.CalendarDatabase;
 import fr.alexandremarcq.familycalendar.databinding.FragmentBirthdayBinding;
 import fr.alexandremarcq.familycalendar.utils.ViewModelFactory;
@@ -34,11 +36,23 @@ public class BirthdayFragment extends Fragment {
         ).create(BirthdayViewModel.class);
 
         mBinding.bdayDoneButton.setOnClickListener(view -> {
-            mViewModel.addBirthday("Anniversaire de " + mBinding.bdayNameBox.getText().toString(), mBinding.bdayDateBox.getText().toString());
-            mBinding.bdayNameBox.setText("");
-            mBinding.bdayDateBox.setText("");
+            mViewModel.addBirthday(
+                    formatBDay(mBinding.bdayNameBox.toString()),
+                    mBinding.bdayDateBox.getText().toString());
+            resetUI();
         });
 
         return mBinding.getRoot();
+    }
+
+    private void resetUI() {
+        mBinding.bdayNameBox.setText("");
+        mBinding.bdayDateBox.setText("");
+    }
+
+    private String formatBDay(String name) {
+        return (Pattern.matches("^[aeiouyAEIOUY]\\w*(-)?\\w*$", name)) ?
+                "Anniversaire d'" + name
+                : "Anniversaire de " + name;
     }
 }
