@@ -5,20 +5,17 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LifecycleOwner;
-import androidx.navigation.Navigation;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.CheckBox;
 
+import java.util.Locale;
+
+import fr.alexandremarcq.familycalendar.R;
 import fr.alexandremarcq.familycalendar.database.CalendarDatabase;
 import fr.alexandremarcq.familycalendar.databinding.FragmentAddEventBinding;
 import fr.alexandremarcq.familycalendar.utils.ViewModelFactory;
@@ -29,7 +26,6 @@ public class AddEventFragment extends Fragment {
     private AddEventViewModel mViewModel;
     private LifecycleOwner mOwner;
 
-    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
@@ -42,6 +38,11 @@ public class AddEventFragment extends Fragment {
         mViewModel = new ViewModelFactory(
                 CalendarDatabase.getInstance(getContext())
         ).create(AddEventViewModel.class);
+
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity().getApplicationContext(),
+                R.array.types, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        mBinding.typeBox.setAdapter(adapter);
 
         mBinding.allDayCheck.setOnClickListener(view -> mViewModel.checkOnAllDay());
 
@@ -59,6 +60,7 @@ public class AddEventFragment extends Fragment {
         );
 
         mViewModel.mAllDayChecked.observe(mOwner, it -> {
+            mBinding.doneButton.setEnabled(it || mViewModel.mTimeIsValid.getValue());
             mBinding.fromPicker.setEnabled(!it);
             mBinding.toPicker.setEnabled(!it);
         });
@@ -68,17 +70,29 @@ public class AddEventFragment extends Fragment {
         );
 
         mBinding.doneButton.setOnClickListener(view -> {
-            mViewModel.addEvent(mBinding.titleBox.getText().toString(), mBinding.objectBox.getText().toString(), null, mBinding.dateBox.getText().toString(), String.valueOf(mBinding.fromPicker.getHour()) + ":" + String.valueOf(mBinding.fromPicker.getMinute()), String.valueOf(mBinding.toPicker.getHour()) + ":" + String.valueOf(mBinding.toPicker.getMinute()));
-            mBinding.titleBox.setText("");
-            mBinding.objectBox.setText("");
-            mBinding.dateBox.setText("");
+            mViewModel.addEvent(mBinding.titleBox.getText().toString(),
+                    mBinding.objectBox.getText().toString(),
+                    mBinding.typeBox.toString(),
+                    mBinding.dateBox.getText().toString(),
+                    formatTime(mBinding.fromPicker.getHour(), mBinding.fromPicker.getMinute()),
+                    formatTime(mBinding.toPicker.getHour(), mBinding.toPicker.getMinute()));
+            resetUI();
         });
 
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity().getApplicationContext(),
-                R.array.types, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        mBinding.typeBox.setAdapter(adapter);
-
         return mBinding.getRoot();
+    }
+
+    private void resetUI() {
+        mBinding.titleBox.setText("");
+        mBinding.objectBox.setText("");
+        mBinding.dateBox.setText("");
+        mBinding.fromPicker.setHour(8);
+        mBinding.fromPicker.setMinute(0);
+        mBinding.toPicker.setHour(8);
+        mBinding.toPicker.setMinute(1);
+    }
+
+    private String formatTime(int hour, int minute) {
+        return String.format(Locale.getDefault(), "%02d:%02d", hour, minute);
     }
 }
