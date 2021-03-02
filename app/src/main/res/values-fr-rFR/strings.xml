@@ -36,4 +36,7 @@
     <string name="phone_number">Téléphone</string>
     <string name="last_name_of_contact">Nom de famille du contact</string>
     <string name="first_name_of_contact">Prénom du contact</string>
+    <string name="family">Famille</string>
+    <string name="personnal">Personnal</string>
+    <string name="professionnal">Professionnal</string>
 </resources>
