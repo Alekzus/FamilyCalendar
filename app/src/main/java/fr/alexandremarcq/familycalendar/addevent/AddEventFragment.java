@@ -1,15 +1,15 @@
 package fr.alexandremarcq.familycalendar.addevent;
 
-import android.os.Build;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.SpinnerAdapter;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LifecycleOwner;
 
@@ -36,13 +36,9 @@ public class AddEventFragment extends Fragment {
         mBinding.setLifecycleOwner(mOwner);
 
         mViewModel = new ViewModelFactory(
-                CalendarDatabase.getInstance(getContext())
+                CalendarDatabase.getInstance(getContext()),
+                getActivity().getPreferences(Context.MODE_PRIVATE)
         ).create(AddEventViewModel.class);
-
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity().getApplicationContext(),
-                R.array.types, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        mBinding.typeBox.setAdapter(adapter);
 
         mBinding.allDayCheck.setOnClickListener(view -> mViewModel.checkOnAllDay());
 
@@ -77,6 +73,16 @@ public class AddEventFragment extends Fragment {
                     formatTime(mBinding.fromPicker.getHour(), mBinding.fromPicker.getMinute()),
                     formatTime(mBinding.toPicker.getHour(), mBinding.toPicker.getMinute()));
             resetUI();
+        });
+
+        mViewModel.mEventTypes.observe(mOwner, strings -> {
+            ArrayAdapter<String> adapter = new ArrayAdapter<>(
+                    getContext(),
+                    android.R.layout.simple_spinner_item,
+                    strings
+            );
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            mBinding.typeBox.setAdapter(adapter);
         });
 
         return mBinding.getRoot();

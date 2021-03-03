@@ -1,6 +1,9 @@
 package fr.alexandremarcq.familycalendar;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
@@ -22,5 +25,14 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = navHostFragment.getNavController();
 
         NavigationUI.setupWithNavController(navigationMenu, navController);
+
+        SharedPreferences sharedPreferences = getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        String[] types = getResources().getStringArray(R.array.types);
+        for (String s: types) {
+            editor.putString("event_type_" + s.toLowerCase(), s);
+        }
+        editor.apply();
     }
 }

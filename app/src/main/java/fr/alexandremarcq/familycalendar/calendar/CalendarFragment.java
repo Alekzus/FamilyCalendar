@@ -18,6 +18,7 @@ import org.jetbrains.annotations.NotNull;
 import fr.alexandremarcq.familycalendar.R;
 import fr.alexandremarcq.familycalendar.database.CalendarDatabase;
 import fr.alexandremarcq.familycalendar.databinding.FragmentCalendarBinding;
+import fr.alexandremarcq.familycalendar.utils.ViewModelFactory;
 
 public class CalendarFragment extends Fragment {
 
@@ -33,7 +34,7 @@ public class CalendarFragment extends Fragment {
 
         mBinding = FragmentCalendarBinding.inflate(inflater);
 
-        mViewModel = new CalendarViewModelFactory(
+        mViewModel = new ViewModelFactory(
                 CalendarDatabase.getInstance(getContext()),
                 mBinding.calendarView.getDate()
         ).create(CalendarViewModel.class);
