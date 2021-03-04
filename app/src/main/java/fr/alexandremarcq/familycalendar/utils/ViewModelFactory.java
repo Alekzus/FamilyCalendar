@@ -1,28 +1,45 @@
 package fr.alexandremarcq.familycalendar.utils;
 
+import android.content.SharedPreferences;
+
 import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
 import fr.alexandremarcq.familycalendar.addevent.AddEventViewModel;
 import fr.alexandremarcq.familycalendar.birthday.BirthdayViewModel;
+import fr.alexandremarcq.familycalendar.calendar.CalendarViewModel;
 import fr.alexandremarcq.familycalendar.contact.ContactViewModel;
 import fr.alexandremarcq.familycalendar.database.CalendarDatabase;
 
 public class ViewModelFactory implements ViewModelProvider.Factory {
 
+    private long mTime;
     private CalendarDatabase mDatabase;
+    private SharedPreferences mPreferences;
 
     public ViewModelFactory(CalendarDatabase database) {
         mDatabase = database;
+    }
+
+    public ViewModelFactory(CalendarDatabase database, long time) {
+        mDatabase = database;
+        mTime = time;
+    }
+
+    public ViewModelFactory(CalendarDatabase database, SharedPreferences preferences) {
+        mDatabase = database;
+        mPreferences = preferences;
     }
 
     @SuppressWarnings("unchecked")
     @NonNull
     @Override
     public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
-        if (modelClass.isAssignableFrom(AddEventViewModel.class)) {
-            return (T) new AddEventViewModel(mDatabase);
+        if (modelClass.isAssignableFrom(CalendarViewModel.class)) {
+            return (T) new CalendarViewModel(mDatabase, mTime);
+        } else if (modelClass.isAssignableFrom(AddEventViewModel.class)) {
+            return (T) new AddEventViewModel(mDatabase, mPreferences);
         } else if (modelClass.isAssignableFrom(BirthdayViewModel.class)) {
             return (T) new BirthdayViewModel(mDatabase);
         } else if (modelClass.isAssignableFrom(ContactViewModel.class)) {
