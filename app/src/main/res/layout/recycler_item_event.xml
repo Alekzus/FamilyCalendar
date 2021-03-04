@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="event"
             type="fr.alexandremarcq.familycalendar.database.event.Event" />
@@ -15,10 +16,11 @@
 
         <TextView
             android:id="@+id/event_time_text"
+            endTime="@{event.endTime}"
+            startTime="@{event.startTime}"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:text="@{@string/event_period(event.startTime, event.endTime)}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/event_name_text"
             tools:text="8:00 - 13:00" />
@@ -46,6 +48,16 @@
             app:layout_constraintStart_toEndOf="@+id/event_time_text"
             app:layout_constraintTop_toBottomOf="@+id/event_name_text"
             tools:text="Réunion avec l'équipe" />
+
+        <TextView
+            android:id="@+id/event_type_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@{event.type.toString()}"
+            app:layout_constraintStart_toStartOf="@+id/event_time_text"
+            app:layout_constraintTop_toBottomOf="@+id/event_time_text"
+            tools:text="Professionnel" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

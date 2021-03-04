@@ -62,9 +62,7 @@
                 android:gravity="start|top"
                 android:hint="@string/enter_object"
                 android:inputType="textMultiLine"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.75"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/title_box"
                 app:layout_constraintTop_toBottomOf="@+id/title_box" />
 
             <TextView
@@ -94,8 +92,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/date"
                 app:layout_constraintBottom_toBottomOf="@+id/date_box"
-                app:layout_constraintEnd_toStartOf="@+id/date_box"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/person_text"
                 app:layout_constraintTop_toTopOf="@+id/date_box" />
 
             <EditText
@@ -106,10 +103,8 @@
                 android:autofillHints=""
                 android:ems="10"
                 android:inputType="date"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.75"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/type_box" />
+                app:layout_constraintStart_toStartOf="@+id/person_box"
+                app:layout_constraintTop_toBottomOf="@id/person_box" />
 
             <CheckBox
                 android:id="@+id/all_day_check"
@@ -175,6 +170,39 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/all_day_check" />
+
+            <TextView
+                android:id="@+id/person_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/person"
+                app:layout_constraintBottom_toBottomOf="@+id/person_box"
+                app:layout_constraintStart_toStartOf="@+id/type_text"
+                app:layout_constraintTop_toTopOf="@+id/person_box" />
+
+            <AutoCompleteTextView
+                android:id="@+id/person_box"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:completionThreshold="0"
+                android:hint="@string/search_contact"
+                app:layout_constraintEnd_toEndOf="@+id/object_box"
+                app:layout_constraintStart_toStartOf="@+id/type_box"
+                app:layout_constraintTop_toBottomOf="@+id/chip_group" />
+
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/chip_group"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:layout_marginEnd="32dp"
+                android:visibility="visible"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/type_box"
+                app:layout_constraintTop_toBottomOf="@+id/type_box"
+                app:singleLine="false">
+
+            </com.google.android.material.chip.ChipGroup>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
