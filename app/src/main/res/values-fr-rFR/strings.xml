@@ -34,9 +34,10 @@
     <string name="last_name">Nom de famille</string>
     <string name="first_name">Prénom</string>
     <string name="phone_number">Téléphone</string>
-    <string name="last_name_of_contact">Nom de famille du contact</string>
-    <string name="first_name_of_contact">Prénom du contact</string>
+    <string name="last_name_of_contact">Nom de famille</string>
+    <string name="first_name_of_contact">Prénom</string>
     <string name="family">Famille</string>
     <string name="personnal">Personnal</string>
     <string name="professionnal">Professionnal</string>
+    <string name="search_contact">Ajouter contact</string>
 </resources>

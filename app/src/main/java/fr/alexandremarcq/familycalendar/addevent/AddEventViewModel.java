@@ -9,15 +9,17 @@ import androidx.lifecycle.ViewModel;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.function.BiConsumer;
 
 import fr.alexandremarcq.familycalendar.database.CalendarDatabase;
 import fr.alexandremarcq.familycalendar.database.event.Event;
 import fr.alexandremarcq.familycalendar.database.event.EventRepository;
+import fr.alexandremarcq.familycalendar.database.person.Person;
+import fr.alexandremarcq.familycalendar.database.person.PersonRepository;
 
 public class AddEventViewModel extends ViewModel {
 
-    private EventRepository mRepository;
+    private EventRepository mEventRepository;
+    private PersonRepository mPersonRepository;
     private SharedPreferences mPreferences;
 
     private final MutableLiveData<Boolean> _allDayChecked = new MutableLiveData<>(Boolean.FALSE);
@@ -29,10 +31,18 @@ public class AddEventViewModel extends ViewModel {
     private final MutableLiveData<List<String>> _eventTypes = new MutableLiveData<>();
     public LiveData<List<String>> mEventTypes = _eventTypes;
 
+    private List<Integer> mIds;
+
+    public LiveData<List<Person>> mPeople;
+
     public AddEventViewModel(CalendarDatabase database, SharedPreferences preferences) {
-        mRepository = new EventRepository(database);
+        mEventRepository = new EventRepository(database);
+        mPersonRepository = new PersonRepository(database);
         mPreferences = preferences;
         _eventTypes.postValue(getTypes());
+        mPeople = mPersonRepository.getResults();
+        mPersonRepository.getPersons();
+        mIds = new ArrayList<>();
     }
 
     private List<String> getTypes() {
@@ -54,6 +64,14 @@ public class AddEventViewModel extends ViewModel {
     }
 
     public void addEvent(String title, String object, String type, String date, String startTime, String endTime) {
-        mRepository.insertEvent(new Event(title, object, type, date, startTime, endTime));
+        mEventRepository.insertEvent(new Event(title, object, type, date, startTime, endTime));
+    }
+
+    public void addId(int id) {
+        mIds.add(id);
+    }
+
+    public void removeId(int id) {
+        mIds.remove((Integer) id);
     }
 }

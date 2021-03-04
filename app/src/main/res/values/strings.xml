@@ -37,8 +37,9 @@
     <string name="last_name_of_contact">Last name of the contact</string>
     <string name="first_name_of_contact">First name of the contact</string>
     <string name="event_period" translatable="false">%1$s - %2$s</string>
-    <string name="contact_name" translatable="false">%1$s %2$s.</string>
+    <string name="contact_name" translatable="false">%1$s %2$s</string>
     <string name="family">Family</string>
     <string name="personnal">Personnal</string>
     <string name="professionnal">Professionnal</string>
+    <string name="search_contact">Search a contact</string>
 </resources>
