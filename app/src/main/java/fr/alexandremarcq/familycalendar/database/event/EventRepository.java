@@ -1,6 +1,5 @@
 package fr.alexandremarcq.familycalendar.database.event;
 
-import android.app.Application;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -14,6 +13,7 @@ import fr.alexandremarcq.familycalendar.database.CalendarDatabase;
 public class EventRepository {
 
     private MutableLiveData<List<Event>> mEvents = new MutableLiveData<>();
+    private MutableLiveData<Long> mEventId = new MutableLiveData<>();
     private EventDao mDao;
 
     public EventRepository(CalendarDatabase database) {
@@ -22,6 +22,7 @@ public class EventRepository {
 
     public void insertEvent(Event event) {
         InsertAsyncTask task = new InsertAsyncTask(mDao);
+        task.mRepository = this;
         task.execute(event);
     }
 
@@ -40,9 +41,13 @@ public class EventRepository {
         return mEvents;
     }
 
+    public LiveData<Long> getInsertedEventId() { return mEventId; }
+
     private void asyncFinished(List<Event> events) {
         mEvents.setValue(events);
     }
+
+    private void asyncFinished(Long eventId) { mEventId.setValue(eventId);}
 
     private static class QueryAsyncTask extends AsyncTask<String, Void, List<Event>> {
 
@@ -64,18 +69,23 @@ public class EventRepository {
         }
     }
 
-    private static class InsertAsyncTask extends AsyncTask<Event, Void, Void> {
+    private static class InsertAsyncTask extends AsyncTask<Event, Void, Long> {
 
         private EventDao mDao;
+        private EventRepository mRepository = null;
 
         InsertAsyncTask(EventDao dao) {
             mDao = dao;
         }
 
         @Override
-        protected Void doInBackground(Event... events) {
-            mDao.insert(events[0]);
-            return null;
+        protected Long doInBackground(Event... events) {
+            return mDao.insert(events[0]);
+        }
+
+        @Override
+        protected void onPostExecute(Long id) {
+            mRepository.asyncFinished(id);
         }
     }
 

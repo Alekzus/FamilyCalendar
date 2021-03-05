@@ -2,8 +2,6 @@ package fr.alexandremarcq.familycalendar.addevent;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +11,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LifecycleOwner;
-import androidx.transition.TransitionManager;
 
 import com.google.android.material.chip.Chip;
 
@@ -70,8 +67,8 @@ public class AddEventFragment extends Fragment {
 
         mViewModel.mTimeIsValid.observe(mOwner, it ->
                 mBinding.doneButton.setEnabled(it
-                && !mBinding.titleBox.getText().toString().equals("")
-                && !mBinding.dateBox.getText().toString().equals(""))
+                        && !mBinding.titleBox.getText().toString().equals("")
+                        && !mBinding.dateBox.getText().toString().equals(""))
         );
 
         mBinding.doneButton.setOnClickListener(view -> {
@@ -120,6 +117,8 @@ public class AddEventFragment extends Fragment {
             mBinding.personBox.setText("");
         });
 
+        mViewModel.mInsertedEventId.observe(mOwner, id -> mViewModel.addEventPerson(id));
+
         return mBinding.getRoot();
     }
 
@@ -150,6 +149,8 @@ public class AddEventFragment extends Fragment {
             mBinding.allDayCheck.setChecked(false);
             mViewModel.checkOnAllDay();
         }
+        mBinding.chipGroup.removeAllViews();
+        mViewModel.clearIds();
     }
 
     private String formatTime(int hour, int minute) {
