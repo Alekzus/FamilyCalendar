@@ -11,4 +11,10 @@ public class EventPerson {
     public int idEvent;
     public int idPerson;
     public boolean accepted;
+
+    public EventPerson(int idEvent, int idPerson, boolean accepted) {
+        this.idEvent = idEvent;
+        this.idPerson = idPerson;
+        this.accepted = accepted;
+    }
 }

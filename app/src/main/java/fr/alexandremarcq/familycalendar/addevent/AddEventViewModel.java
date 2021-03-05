@@ -1,6 +1,7 @@
 package fr.alexandremarcq.familycalendar.addevent;
 
 import android.content.SharedPreferences;
+import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -13,6 +14,8 @@ import java.util.Map;
 import fr.alexandremarcq.familycalendar.database.CalendarDatabase;
 import fr.alexandremarcq.familycalendar.database.event.Event;
 import fr.alexandremarcq.familycalendar.database.event.EventRepository;
+import fr.alexandremarcq.familycalendar.database.eventperson.EventPerson;
+import fr.alexandremarcq.familycalendar.database.eventperson.EventPersonRepository;
 import fr.alexandremarcq.familycalendar.database.person.Person;
 import fr.alexandremarcq.familycalendar.database.person.PersonRepository;
 
@@ -20,6 +23,7 @@ public class AddEventViewModel extends ViewModel {
 
     private EventRepository mEventRepository;
     private PersonRepository mPersonRepository;
+    private EventPersonRepository mEventPersonRepository;
     private SharedPreferences mPreferences;
 
     private final MutableLiveData<Boolean> _allDayChecked = new MutableLiveData<>(Boolean.FALSE);
@@ -34,13 +38,16 @@ public class AddEventViewModel extends ViewModel {
     private List<Integer> mIds;
 
     public LiveData<List<Person>> mPeople;
+    public LiveData<Long> mInsertedEventId;
 
     public AddEventViewModel(CalendarDatabase database, SharedPreferences preferences) {
         mEventRepository = new EventRepository(database);
         mPersonRepository = new PersonRepository(database);
+        mEventPersonRepository = new EventPersonRepository(database);
         mPreferences = preferences;
         _eventTypes.postValue(getTypes());
         mPeople = mPersonRepository.getResults();
+        mInsertedEventId = mEventRepository.getInsertedEventId();
         mPersonRepository.getPersons();
         mIds = new ArrayList<>();
     }
@@ -67,11 +74,25 @@ public class AddEventViewModel extends ViewModel {
         mEventRepository.insertEvent(new Event(title, object, type, date, startTime, endTime));
     }
 
+    public void addEventPerson(Long eventId) {
+        if (!mIds.isEmpty()) {
+            for (int personId : mIds) {
+                mEventPersonRepository.insertEventPerson(
+                        new EventPerson(Math.toIntExact(eventId), personId, false)
+                );
+            }
+        }
+    }
+
     public void addId(int id) {
         mIds.add(id);
     }
 
     public void removeId(int id) {
         mIds.remove((Integer) id);
+    }
+
+    public void clearIds() {
+        mIds.clear();
     }
 }
