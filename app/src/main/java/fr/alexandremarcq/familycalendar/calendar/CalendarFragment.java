@@ -6,11 +6,15 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LifecycleOwner;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
+import androidx.navigation.ui.NavigationUI;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import org.jetbrains.annotations.NotNull;
@@ -18,6 +22,7 @@ import org.jetbrains.annotations.NotNull;
 import fr.alexandremarcq.familycalendar.R;
 import fr.alexandremarcq.familycalendar.database.CalendarDatabase;
 import fr.alexandremarcq.familycalendar.databinding.FragmentCalendarBinding;
+import fr.alexandremarcq.familycalendar.utils.ItemClickSupport;
 import fr.alexandremarcq.familycalendar.utils.ViewModelFactory;
 
 public class CalendarFragment extends Fragment {
@@ -46,6 +51,10 @@ public class CalendarFragment extends Fragment {
 
         mBinding.recyclerView.setAdapter(mAdapter);
         mBinding.recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        ItemClickSupport.addTo(mBinding.recyclerView, R.layout.recycler_item_event)
+                .setOnItemClickListener((recyclerView, position, v) ->
+                        mViewModel.navigateToDetails(mAdapter.getItem(position))
+                );
 
         mBinding.calendarView.setOnDateChangeListener((view, year, month, dayOfMonth) -> {
             mViewModel.setDate(dayOfMonth, month, year);
@@ -56,6 +65,16 @@ public class CalendarFragment extends Fragment {
                 mAdapter.submitList(events)
         );
 
+        mViewModel.mNavigateToDetails.observe(mOwner, event -> {
+            if (event != null) {
+                NavHostFragment.findNavController(this)
+                        .navigate(
+                                CalendarFragmentDirections.actionCalendarFragmentToEventDetailsFragment(event)
+                        );
+            }
+            mViewModel.onNavigatedToDetails();
+        });
+
         return mBinding.getRoot();
     }
 
@@ -65,8 +84,4 @@ public class CalendarFragment extends Fragment {
         super.onCreateOptionsMenu(menu, inflater);
     }
 
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-    }
 }

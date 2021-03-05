@@ -25,6 +25,10 @@
             android:id="@+id/action_calendarFragment_to_contactFragment"
             app:destination="@id/contactFragment"
             app:popUpTo="@id/calendarFragment" />
+        <action
+            android:id="@+id/action_calendarFragment_to_eventDetailsFragment"
+            app:destination="@id/eventDetailsFragment"
+            app:popUpTo="@id/calendarFragment" />
     </fragment>
     <fragment
         android:id="@+id/birthdayFragment"
@@ -35,4 +39,13 @@
         android:id="@+id/contactFragment"
         android:name="fr.alexandremarcq.familycalendar.contact.ContactFragment"
         android:label="ContactFragment" />
+    <fragment
+        android:id="@+id/eventDetailsFragment"
+        android:name="fr.alexandremarcq.familycalendar.eventdetails.EventDetailsFragment"
+        android:label="fragment_event_details"
+        tools:layout="@layout/fragment_event_details" >
+        <argument
+            android:name="event"
+            app:argType="fr.alexandremarcq.familycalendar.database.event.Event" />
+    </fragment>
 </navigation>

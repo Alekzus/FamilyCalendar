@@ -13,7 +13,7 @@ import fr.alexandremarcq.familycalendar.databinding.RecyclerItemEventBinding;
 
 public class EventAdapter extends ListAdapter<Event, EventAdapter.EventViewHolder> {
 
-    protected EventAdapter() {
+    public EventAdapter() {
         super(new DiffCallBack());
     }
 
@@ -29,6 +29,11 @@ public class EventAdapter extends ListAdapter<Event, EventAdapter.EventViewHolde
     public void onBindViewHolder(@NonNull EventViewHolder holder, int position) {
         Event event = getItem(position);
         holder.bind(event);
+    }
+
+    @Override
+    protected Event getItem(int position) {
+        return super.getItem(position);
     }
 
     public static class DiffCallBack extends DiffUtil.ItemCallback<Event> {

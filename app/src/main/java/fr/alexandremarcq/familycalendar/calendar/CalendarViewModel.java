@@ -2,6 +2,7 @@ package fr.alexandremarcq.familycalendar.calendar;
 
 
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import java.util.List;
@@ -17,6 +18,9 @@ public class CalendarViewModel extends ViewModel {
     private final EventRepository mRepository;
     public LiveData<List<Event>> mEvents;
 
+    private MutableLiveData<Event> _navigateToDetails = new MutableLiveData<>();
+    public LiveData<Event> mNavigateToDetails = _navigateToDetails;
+
     public CalendarViewModel(CalendarDatabase database, long time) {
         int[] date = UtilsFunctions.dateConverter(time);
         mRepository = new EventRepository(database);
@@ -28,5 +32,13 @@ public class CalendarViewModel extends ViewModel {
         mRepository.findEvent(
                 String.format(Locale.getDefault(), "%02d/%02d/%d", day, month + 1, year)
         );
+    }
+
+    public void navigateToDetails(Event event) {
+        _navigateToDetails.postValue(event);
+    }
+
+    public void onNavigatedToDetails() {
+        _navigateToDetails.postValue(null);
     }
 }
