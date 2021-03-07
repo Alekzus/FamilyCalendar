@@ -53,6 +53,7 @@
             android:layout_marginTop="32dp"
             android:ems="10"
             android:inputType="date"
+            android:focusableInTouchMode="false"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.75"
             app:layout_constraintStart_toStartOf="parent"

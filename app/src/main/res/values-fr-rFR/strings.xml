@@ -37,6 +37,6 @@
     <string name="last_name_of_contact">Nom de famille du contact</string>
     <string name="first_name_of_contact">Prénom du contact</string>
     <string name="family">Famille</string>
-    <string name="personnal">Personnal</string>
-    <string name="professionnal">Professionnal</string>
+    <string name="personnal">Personnel</string>
+    <string name="professionnal">Professionnel</string>
 </resources>
