@@ -1,6 +1,5 @@
 package fr.alexandremarcq.familycalendar.addevent;
 
-import android.app.DatePickerDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -17,10 +16,15 @@ import androidx.lifecycle.LifecycleOwner;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import com.google.android.material.chip.Chip;
+
+import org.jetbrains.annotations.NotNull;
+
 import java.util.Locale;
 
 import fr.alexandremarcq.familycalendar.R;
 import fr.alexandremarcq.familycalendar.database.CalendarDatabase;
+import fr.alexandremarcq.familycalendar.database.person.Person;
 import fr.alexandremarcq.familycalendar.databinding.FragmentAddEventBinding;
 import fr.alexandremarcq.familycalendar.utils.ViewModelFactory;
 
@@ -67,10 +71,21 @@ public class AddEventFragment extends Fragment {
         });
 
         mViewModel.mTimeIsValid.observe(mOwner, it ->
-                mBinding.doneButton.setEnabled(it)
+                mBinding.doneButton.setEnabled(it
+                        && !mBinding.titleBox.getText().toString().equals("")
+                        && !mBinding.dateBox.getText().toString().equals(""))
         );
 
         mBinding.doneButton.setOnClickListener(view -> {
+            String startTime;
+            String endTime;
+            if (!mBinding.allDayCheck.isChecked()) {
+                startTime = formatTime(mBinding.fromPicker.getHour(), mBinding.fromPicker.getMinute());
+                endTime = formatTime(mBinding.toPicker.getHour(), mBinding.toPicker.getMinute());
+            } else {
+                startTime = null;
+                endTime = null;
+            }
             mViewModel.addEvent(mBinding.titleBox.getText().toString(),
                     mBinding.objectBox.getText().toString(),
                     mBinding.typeBox.toString(),
@@ -113,6 +128,25 @@ public class AddEventFragment extends Fragment {
             }
         });
 
+        mViewModel.mPeople.observe(mOwner, people -> {
+            ContactAdapter adapter = new ContactAdapter(
+                    getContext(),
+                    R.layout.autocomplete_item_contact,
+                    people
+            );
+            mBinding.personBox.setAdapter(adapter);
+        });
+
+        mBinding.personBox.setOnItemClickListener((parent, view, position, id) -> {
+            Person selectedPerson = (Person) parent.getItemAtPosition(position);
+            Chip chip = setupChip(selectedPerson);
+            mBinding.chipGroup.addView(chip);
+            mViewModel.addId(selectedPerson.id);
+            mBinding.personBox.setText("");
+        });
+
+        mViewModel.mInsertedEventId.observe(mOwner, id -> mViewModel.addEventPerson(id));
+
         return mBinding.getRoot();
     }
 
@@ -123,13 +157,35 @@ public class AddEventFragment extends Fragment {
         mBinding.dateBox.setText(sdf.format(myCalendar.getTime()));
     }
 
+    @NotNull
+    private Chip setupChip(Person person) {
+        Chip chip = new Chip(getContext());
+        chip.setText(getResources().getString(
+                R.string.contact_name,
+                person.firstName,
+                person.lastName));
+        chip.setCloseIconVisible(true);
+        chip.setOnCloseIconClickListener(v -> {
+            mBinding.chipGroup.removeView(chip);
+            mViewModel.removeId(person.id);
+        });
+        return chip;
+    }
+
     private void resetUI() {
         mBinding.titleBox.setText("");
         mBinding.objectBox.setText("");
+        mBinding.dateBox.setText("");
         mBinding.fromPicker.setHour(8);
         mBinding.fromPicker.setMinute(0);
         mBinding.toPicker.setHour(8);
         mBinding.toPicker.setMinute(1);
+        if (mBinding.allDayCheck.isChecked()) {
+            mBinding.allDayCheck.setChecked(false);
+            mViewModel.checkOnAllDay();
+        }
+        mBinding.chipGroup.removeAllViews();
+        mViewModel.clearIds();
     }
 
     private String formatTime(int hour, int minute) {
