@@ -1,5 +1,6 @@
 package fr.alexandremarcq.familycalendar.addevent;
 
+import android.app.DatePickerDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -8,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.SpinnerAdapter;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -86,12 +88,17 @@ public class AddEventFragment extends Fragment {
                 startTime = null;
                 endTime = null;
             }
-            mViewModel.addEvent(mBinding.titleBox.getText().toString(),
-                    mBinding.objectBox.getText().toString(),
-                    mBinding.typeBox.toString(),
-                    mBinding.dateBox.toString(),
-                    formatTime(mBinding.fromPicker.getHour(), mBinding.fromPicker.getMinute()),
-                    formatTime(mBinding.toPicker.getHour(), mBinding.toPicker.getMinute()));
+            if (!mViewModel.checkConflicts(mBinding.dateBox.getText().toString(), startTime, endTime, mViewModel.getmIds())) {
+                mViewModel.addEvent(mBinding.titleBox.getText().toString(),
+                        mBinding.objectBox.getText().toString(),
+                        mBinding.typeBox.getSelectedItem().toString(),
+                        mBinding.dateBox.getText().toString(),
+                        startTime,
+                        endTime);
+            }
+            else
+                Toast.makeText(getContext(),"L\'évènement que vous esssayez d'ajouter est en conflit avec un autre évènement",Toast.LENGTH_SHORT).show();
+
             resetUI();
         });
 
@@ -185,7 +192,6 @@ public class AddEventFragment extends Fragment {
             mViewModel.checkOnAllDay();
         }
         mBinding.chipGroup.removeAllViews();
-        mViewModel.clearIds();
     }
 
     private String formatTime(int hour, int minute) {

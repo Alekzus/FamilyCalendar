@@ -20,4 +20,7 @@ public interface EventDao {
 
     @Query("SELECT * FROM event WHERE date LIKE :date")
     List<Event> getEventsByDate(String date);
+
+    @Query("SELECT * FROM event, eventperson WHERE event.id=eventperson.idEvent AND date=:date AND idPerson=:personId AND ((startTime<=:startTime AND endTime>=:endTime) OR (startTime<=:startTime AND endTime>=:startTime) OR (startTime<=:endTime AND endTime>=:endTime) OR (startTime>=:startTime AND endTime<=:endTime) OR (startTime IS NULL AND endTime IS NULL))")
+    List<Event> getEventsConflicts(String date, String startTime, String endTime, int personId);
 }

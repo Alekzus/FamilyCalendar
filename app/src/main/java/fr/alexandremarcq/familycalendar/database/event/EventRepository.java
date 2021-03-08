@@ -14,6 +14,7 @@ public class EventRepository {
 
     private MutableLiveData<List<Event>> mEvents = new MutableLiveData<>();
     private MutableLiveData<Long> mEventId = new MutableLiveData<>();
+    private MutableLiveData<List<Event>> mConflicts = new MutableLiveData<>();
     private EventDao mDao;
 
     public EventRepository(CalendarDatabase database) {
@@ -37,17 +38,29 @@ public class EventRepository {
         task.execute(date);
     }
 
+    public void checkConflicts(String date, String startTime, String endTime, String personId) {
+        ConflictAsyncTask task = new ConflictAsyncTask(mDao);
+        task.mRepository = this;
+        task.execute(date,startTime,endTime,personId);
+    }
+
     public LiveData<List<Event>> getSearchResults() {
         return mEvents;
     }
 
     public LiveData<Long> getInsertedEventId() { return mEventId; }
 
+    public LiveData<List<Event>> getConflictsResults() {
+        return mConflicts;
+    }
+
     private void asyncFinished(List<Event> events) {
         mEvents.setValue(events);
     }
 
     private void asyncFinished(Long eventId) { mEventId.setValue(eventId);}
+
+    private void asyncConflictsFinished(List<Event> conflicts) { mConflicts.setValue(conflicts);}
 
     private static class QueryAsyncTask extends AsyncTask<String, Void, List<Event>> {
 
@@ -66,6 +79,26 @@ public class EventRepository {
         @Override
         protected void onPostExecute(List<Event> events) {
             mRepository.asyncFinished(events);
+        }
+    }
+
+    private static class ConflictAsyncTask extends AsyncTask<String, Void, List<Event>> {
+
+        private EventDao mDao;
+        private EventRepository mRepository = null;
+
+        ConflictAsyncTask(EventDao dao) {
+            mDao = dao;
+        }
+
+        @Override
+        protected List<Event> doInBackground(String... strings) {
+            return mDao.getEventsConflicts(strings[0], strings[1], strings[2], Integer.parseInt(strings[3]));
+        }
+
+        @Override
+        protected void onPostExecute(List<Event> conflicts) {
+            mRepository.asyncFinished(conflicts);
         }
     }
 

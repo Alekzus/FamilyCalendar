@@ -103,6 +103,7 @@
                 android:autofillHints=""
                 android:ems="10"
                 android:inputType="date"
+                android:focusableInTouchMode="false"
                 app:layout_constraintStart_toStartOf="@+id/person_box"
                 app:layout_constraintTop_toBottomOf="@id/person_box" />
 

@@ -16,7 +16,7 @@ import fr.alexandremarcq.familycalendar.database.eventperson.EventPersonDao;
 import fr.alexandremarcq.familycalendar.database.person.Person;
 import fr.alexandremarcq.familycalendar.database.person.PersonDao;
 
-@Database(entities = {Event.class, EventPerson.class, Person.class}, version = 1, exportSchema = false)
+@Database(entities = {Event.class, EventPerson.class, Person.class}, version = 2, exportSchema = false)
 public abstract class CalendarDatabase extends RoomDatabase {
     public abstract EventDao eventDao();
     public abstract PersonDao personDao();
