@@ -42,4 +42,8 @@
     <string name="personnal">Personnal</string>
     <string name="professionnal">Professionnal</string>
     <string name="search_contact">Search a contact</string>
+    <string name="update">Update</string>
+    <string name="delete">Delete</string>
+    <string name="are_you_sure">Are you sure ?</string>
+    <string name="cancel">Cancel</string>
 </resources>

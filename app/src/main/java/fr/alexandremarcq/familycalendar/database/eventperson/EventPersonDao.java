@@ -17,4 +17,7 @@ public interface EventPersonDao {
 
     @Query("SELECT * FROM eventperson")
     List<EventPerson> getAll();
+
+    @Query("DELETE FROM eventperson WHERE idEvent = :eventId")
+    void deleteByEventId(long eventId);
 }

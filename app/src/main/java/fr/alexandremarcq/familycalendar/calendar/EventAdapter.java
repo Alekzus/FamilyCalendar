@@ -21,7 +21,10 @@ public class EventAdapter extends ListAdapter<Event, EventAdapter.EventViewHolde
     @Override
     public EventViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         return new EventViewHolder(
-                RecyclerItemEventBinding.inflate(LayoutInflater.from(parent.getContext()))
+                RecyclerItemEventBinding.inflate(
+                        LayoutInflater.from(parent.getContext()),
+                        parent,
+                        false)
         );
     }
 

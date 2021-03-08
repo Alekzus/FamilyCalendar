@@ -1,6 +1,7 @@
 package fr.alexandremarcq.familycalendar.utils;
 
 import android.content.SharedPreferences;
+import android.widget.TabHost;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;
@@ -11,6 +12,7 @@ import fr.alexandremarcq.familycalendar.birthday.BirthdayViewModel;
 import fr.alexandremarcq.familycalendar.calendar.CalendarViewModel;
 import fr.alexandremarcq.familycalendar.contact.ContactViewModel;
 import fr.alexandremarcq.familycalendar.database.CalendarDatabase;
+import fr.alexandremarcq.familycalendar.eventdetails.EventDetailsViewModel;
 
 public class ViewModelFactory implements ViewModelProvider.Factory {
 
@@ -44,6 +46,8 @@ public class ViewModelFactory implements ViewModelProvider.Factory {
             return (T) new BirthdayViewModel(mDatabase);
         } else if (modelClass.isAssignableFrom(ContactViewModel.class)) {
             return (T) new ContactViewModel(mDatabase);
+        } else if (modelClass.isAssignableFrom(EventDetailsViewModel.class)) {
+            return (T) new EventDetailsViewModel(mDatabase);
         }
         throw new IllegalArgumentException("Unknown class");
     }

@@ -41,4 +41,5 @@ public class CalendarViewModel extends ViewModel {
     public void onNavigatedToDetails() {
         _navigateToDetails.postValue(null);
     }
+
 }

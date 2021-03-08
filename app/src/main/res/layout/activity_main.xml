@@ -22,5 +22,5 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="0dp"
         android:layout_marginEnd="0dp"
-        app:menu="@menu/menu" />
+        app:menu="@menu/nav_menu" />
 </LinearLayout>

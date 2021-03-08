@@ -34,6 +34,11 @@ public class EventPersonRepository {
         task.execute(date);
     }
 
+    public void deleteByEventId(long eventId) {
+        DeleteEventIdAsyncTask task = new DeleteEventIdAsyncTask(mDao);
+        task.execute(eventId);
+    }
+
     public LiveData<List<EventPerson>> getSearchResults() {
         return mEventPersons;
     }
@@ -88,6 +93,21 @@ public class EventPersonRepository {
         @Override
         protected Void doInBackground(EventPerson... eventPeople) {
             mDao.delete(eventPeople[0]);
+            return null;
+        }
+    }
+
+    private static class DeleteEventIdAsyncTask extends AsyncTask<Long, Void, Void> {
+
+        private EventPersonDao mDao;
+
+        DeleteEventIdAsyncTask(EventPersonDao dao) {
+            mDao = dao;
+        }
+
+        @Override
+        protected Void doInBackground(Long... longs) {
+            mDao.deleteByEventId(longs[0]);
             return null;
         }
     }
