@@ -42,4 +42,7 @@
     <string name="personnal">Personnal</string>
     <string name="professionnal">Professionnal</string>
     <string name="search_contact">Search a contact</string>
+    <string name="birthday">Birthday</string>
+    <string name="bday_title1">%1$s\'s birthday</string>
+    <string name="bday_title2">%1$s\'s birthday</string>
 </resources>

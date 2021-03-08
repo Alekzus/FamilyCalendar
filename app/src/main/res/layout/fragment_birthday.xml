@@ -23,11 +23,12 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/bday_name_box" />
 
-        <EditText
+        <AutoCompleteTextView
             android:id="@+id/bday_name_box"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
+            android:completionThreshold="0"
             android:ems="10"
             android:hint="@string/name_of_the_contact"
             android:inputType="textPersonName"
