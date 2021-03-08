@@ -3,8 +3,10 @@ package fr.alexandremarcq.familycalendar.database.event;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import java.io.Serializable;
+
 @Entity
-public class Event {
+public class Event implements Serializable {
     @PrimaryKey(autoGenerate = true)
     public int id;
 
