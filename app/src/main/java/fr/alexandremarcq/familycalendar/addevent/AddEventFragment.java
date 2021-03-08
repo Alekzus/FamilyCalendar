@@ -1,20 +1,23 @@
 package fr.alexandremarcq.familycalendar.addevent;
 
+import android.app.DatePickerDialog;
 import android.content.Context;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.DatePicker;
+import android.widget.SpinnerAdapter;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LifecycleOwner;
-import androidx.transition.TransitionManager;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import com.google.android.material.chip.Chip;
 
 import org.jetbrains.annotations.NotNull;
@@ -32,6 +35,7 @@ public class AddEventFragment extends Fragment {
     private FragmentAddEventBinding mBinding;
     private AddEventViewModel mViewModel;
     private LifecycleOwner mOwner;
+    final Calendar myCalendar = Calendar.getInstance();
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -70,8 +74,8 @@ public class AddEventFragment extends Fragment {
 
         mViewModel.mTimeIsValid.observe(mOwner, it ->
                 mBinding.doneButton.setEnabled(it
-                && !mBinding.titleBox.getText().toString().equals("")
-                && !mBinding.dateBox.getText().toString().equals(""))
+                        && !mBinding.titleBox.getText().toString().equals("")
+                        && !mBinding.dateBox.getText().toString().equals(""))
         );
 
         mBinding.doneButton.setOnClickListener(view -> {
@@ -84,12 +88,17 @@ public class AddEventFragment extends Fragment {
                 startTime = null;
                 endTime = null;
             }
-            mViewModel.addEvent(mBinding.titleBox.getText().toString(),
-                    mBinding.objectBox.getText().toString(),
-                    mBinding.typeBox.getSelectedItem().toString(),
-                    mBinding.dateBox.getText().toString(),
-                    startTime,
-                    endTime);
+            if (!mViewModel.checkConflicts(mBinding.dateBox.getText().toString(), startTime, endTime, mViewModel.getmIds())) {
+                mViewModel.addEvent(mBinding.titleBox.getText().toString(),
+                        mBinding.objectBox.getText().toString(),
+                        mBinding.typeBox.getSelectedItem().toString(),
+                        mBinding.dateBox.getText().toString(),
+                        startTime,
+                        endTime);
+            }
+            else
+                Toast.makeText(getContext(),"L\'évènement que vous esssayez d'ajouter est en conflit avec un autre évènement",Toast.LENGTH_SHORT).show();
+
             resetUI();
         });
 
@@ -102,6 +111,18 @@ public class AddEventFragment extends Fragment {
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             mBinding.typeBox.setAdapter(adapter);
         });
+
+        DatePickerDialog.OnDateSetListener date = (view, year, monthOfYear, dayOfMonth) -> {
+            myCalendar.set(Calendar.YEAR, year);
+            myCalendar.set(Calendar.MONTH, monthOfYear);
+            myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+            updateLabel();
+        };
+
+        mBinding.dateBox.setOnClickListener(v -> new DatePickerDialog(getContext(), date, myCalendar
+                .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
+                myCalendar.get(Calendar.DAY_OF_MONTH)).show()
+        );
 
         mViewModel.mPeople.observe(mOwner, people -> {
             ContactAdapter adapter = new ContactAdapter(
@@ -120,7 +141,16 @@ public class AddEventFragment extends Fragment {
             mBinding.personBox.setText("");
         });
 
+        mViewModel.mInsertedEventId.observe(mOwner, id -> mViewModel.addEventPerson(id));
+
         return mBinding.getRoot();
+    }
+
+    private void updateLabel() {
+        String myFormat = "dd/MM/yyyy";
+        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+
+        mBinding.dateBox.setText(sdf.format(myCalendar.getTime()));
     }
 
     @NotNull
@@ -150,6 +180,7 @@ public class AddEventFragment extends Fragment {
             mBinding.allDayCheck.setChecked(false);
             mViewModel.checkOnAllDay();
         }
+        mBinding.chipGroup.removeAllViews();
     }
 
     private String formatTime(int hour, int minute) {
