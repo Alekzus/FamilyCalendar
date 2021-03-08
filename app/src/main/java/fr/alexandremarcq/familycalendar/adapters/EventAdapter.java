@@ -1,4 +1,4 @@
-package fr.alexandremarcq.familycalendar.calendar;
+package fr.alexandremarcq.familycalendar.adapters;
 
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
@@ -13,7 +13,7 @@ import fr.alexandremarcq.familycalendar.databinding.RecyclerItemEventBinding;
 
 public class EventAdapter extends ListAdapter<Event, EventAdapter.EventViewHolder> {
 
-    protected EventAdapter() {
+    public EventAdapter() {
         super(new DiffCallBack());
     }
 

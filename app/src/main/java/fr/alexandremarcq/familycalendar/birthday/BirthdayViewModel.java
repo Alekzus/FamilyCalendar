@@ -1,20 +1,30 @@
 package fr.alexandremarcq.familycalendar.birthday;
 
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
+
+import java.util.List;
 
 import fr.alexandremarcq.familycalendar.database.CalendarDatabase;
 import fr.alexandremarcq.familycalendar.database.event.Event;
 import fr.alexandremarcq.familycalendar.database.event.EventRepository;
+import fr.alexandremarcq.familycalendar.database.person.Person;
+import fr.alexandremarcq.familycalendar.database.person.PersonRepository;
 
 public class BirthdayViewModel extends ViewModel {
 
-    private EventRepository mRepository;
+    private EventRepository mEventRepository;
+    private PersonRepository mPersonRepository;
+    public LiveData<List<Person>> mPeople;
 
     public BirthdayViewModel(CalendarDatabase database) {
-        mRepository = new EventRepository(database);
+        mEventRepository = new EventRepository(database);
+        mPersonRepository = new PersonRepository(database);
+        mPeople = mPersonRepository.getResults();
+        mPersonRepository.getPersons();
     }
 
-    public void addBirthday(String title, String date) {
-        mRepository.insertEvent(new Event(title, null, "Anniversaire", date, "0:00", "23:59"));
+    public void addBirthday(String title, String date, String type) {
+        mEventRepository.insertEvent(new Event(title, null, type, date, null, null));
     }
 }
