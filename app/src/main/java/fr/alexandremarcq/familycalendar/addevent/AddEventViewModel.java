@@ -49,26 +49,24 @@ public class AddEventViewModel extends ViewModel {
         mPreferences = preferences;
         _eventTypes.postValue(getTypes());
         mPeople = mPersonRepository.getResults();
+        mConflicts = mEventRepository.getConflictsResults();
         mInsertedEventId = mEventRepository.getInsertedEventId();
         mPersonRepository.getPersons();
         mIds = new ArrayList<>();
     }
 
-    public boolean checkConflicts(String date, String startTime, String endTime, List<Integer> personIds) {
-        boolean conflict=false;
+    public void getConflicts(String date, String startTime, String endTime, List<Integer> personIds) {
         for (int i = 0; i < personIds.size(); i++) {
-            mConflicts = mEventRepository.getConflictsResults();
             mEventRepository.checkConflicts(date,startTime,endTime,personIds.get(i).toString());
-            //System.out.println("Date : "+date);
-            //System.out.println("ST : "+startTime);
-            //System.out.println("ET : "+endTime);
-            //System.out.println("IDPerson : "+personIds.get(i).toString());
-            //System.out.println("Resultat : "+mConflicts.getValue());
-            if(mConflicts.getValue()!=null)
-                conflict=true;
         }
-        return conflict;
     }
+
+    public boolean checkConflicts(List<Event> l){
+        System.out.println("Resultat564646 : "+l);
+        return !l.isEmpty();
+    }
+
+
 
     private List<String> getTypes() {
         List<String> values = new ArrayList<>();
@@ -105,12 +103,14 @@ public class AddEventViewModel extends ViewModel {
 
     public void addId(int id) {
         mIds.add(id);
-        System.out.println("Avant");
-        System.out.println(mIds);
     }
 
     public void removeId(int id) {
         mIds.remove((Integer) id);
+    }
+
+    public void removeConflicts() {
+        mConflicts.getValue().clear();
     }
 
     public List<Integer> getmIds() {

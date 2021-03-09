@@ -16,6 +16,7 @@ import androidx.lifecycle.LifecycleOwner;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+
 import com.google.android.material.chip.Chip;
 
 import org.jetbrains.annotations.NotNull;
@@ -78,27 +79,7 @@ public class AddEventFragment extends Fragment {
         );
 
         mBinding.doneButton.setOnClickListener(view -> {
-            String startTime;
-            String endTime;
-            if (!mBinding.allDayCheck.isChecked()) {
-                startTime = formatTime(mBinding.fromPicker.getHour(), mBinding.fromPicker.getMinute());
-                endTime = formatTime(mBinding.toPicker.getHour(), mBinding.toPicker.getMinute());
-            } else {
-                startTime = null;
-                endTime = null;
-            }
-            if (!mViewModel.checkConflicts(mBinding.dateBox.getText().toString(), startTime, endTime, mViewModel.getmIds())) {
-                mViewModel.addEvent(mBinding.titleBox.getText().toString(),
-                        mBinding.objectBox.getText().toString(),
-                        mBinding.typeBox.getSelectedItem().toString(),
-                        mBinding.dateBox.getText().toString(),
-                        startTime,
-                        endTime);
-            }
-            else
-                Toast.makeText(getContext(),"L\'évènement que vous esssayez d'ajouter est en conflit avec un autre évènement",Toast.LENGTH_SHORT).show();
-
-            resetUI();
+            mViewModel.getConflicts(mBinding.dateBox.getText().toString(), getTime()[0], getTime()[1], mViewModel.getmIds());
         });
 
         mViewModel.mEventTypes.observe(mOwner, strings -> {
@@ -142,7 +123,37 @@ public class AddEventFragment extends Fragment {
 
         mViewModel.mInsertedEventId.observe(mOwner, id -> mViewModel.addEventPerson(id));
 
+        mViewModel.mConflicts.observe(mOwner, events -> {
+            if (mViewModel.checkConflicts(events)) {
+                Toast.makeText(getContext(), "L\'évènement que vous esssayez d'ajouter est en conflit avec un autre évènement", Toast.LENGTH_SHORT).show();
+            }
+            else {
+                mViewModel.addEvent(mBinding.titleBox.getText().toString(),
+                        mBinding.objectBox.getText().toString(),
+                        mBinding.typeBox.getSelectedItem().toString(),
+                        mBinding.dateBox.getText().toString(),
+                        getTime()[0],
+                        getTime()[1]);
+            }
+
+            resetUI();
+        });
+
         return mBinding.getRoot();
+    }
+
+    private String[] getTime() {
+        String startTime;
+        String endTime;
+        if (!mBinding.allDayCheck.isChecked()) {
+            startTime = formatTime(mBinding.fromPicker.getHour(), mBinding.fromPicker.getMinute());
+            endTime = formatTime(mBinding.toPicker.getHour(), mBinding.toPicker.getMinute());
+        } else {
+            startTime = null;
+            endTime = null;
+        }
+
+        return new String[]{startTime, endTime};
     }
 
     private void updateLabel() {
@@ -180,6 +191,7 @@ public class AddEventFragment extends Fragment {
             mViewModel.checkOnAllDay();
         }
         mBinding.chipGroup.removeAllViews();
+        mViewModel.removeConflicts();
     }
 
     private String formatTime(int hour, int minute) {
