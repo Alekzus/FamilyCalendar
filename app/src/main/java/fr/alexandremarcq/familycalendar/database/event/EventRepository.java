@@ -61,7 +61,6 @@ public class EventRepository {
     private void asyncFinished(Long eventId) { mEventId.setValue(eventId);}
 
     private void asyncConflictsFinished(List<Event> conflicts) {
-        System.out.println("Resultat555 : "+conflicts);
         mConflicts.setValue(conflicts);}
 
     private static class QueryAsyncTask extends AsyncTask<String, Void, List<Event>> {
@@ -95,11 +94,6 @@ public class EventRepository {
 
         @Override
         protected List<Event> doInBackground(String... strings) {
-            //System.out.println("Date : "+strings[0]);
-            //System.out.println("ST : "+strings[1]);
-            //System.out.println("ET : "+strings[2]);
-            //System.out.println("ID : "+Integer.parseInt(strings[3]));
-            //System.out.println("Resultat : "+mDao.getEventsConflicts(strings[0], strings[1], strings[2], Integer.parseInt(strings[3])));
             return mDao.getEventsConflicts(strings[0], strings[1], strings[2], Integer.parseInt(strings[3]));
         }
 
