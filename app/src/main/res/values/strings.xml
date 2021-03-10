@@ -46,4 +46,7 @@
     <string name="delete">Delete</string>
     <string name="are_you_sure">Are you sure ?</string>
     <string name="cancel">Cancel</string>
+    <string name="birthday">Birthday</string>
+    <string name="bday_title1">%1$s\'s birthday</string>
+    <string name="bday_title2">%1$s\'s birthday</string>
 </resources>

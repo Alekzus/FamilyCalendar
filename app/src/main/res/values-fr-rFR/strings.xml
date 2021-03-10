@@ -40,4 +40,7 @@
     <string name="personnal">Personnal</string>
     <string name="professionnal">Professionnal</string>
     <string name="search_contact">Ajouter contact</string>
+    <string name="birthday">Anniversaire</string>
+    <string name="bday_title1">Anniversaide d\'%1$s</string>
+    <string name="bday_title2">Anniversaire de %1$s</string>
 </resources>

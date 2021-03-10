@@ -1,4 +1,4 @@
-package fr.alexandremarcq.familycalendar.calendar;
+package fr.alexandremarcq.familycalendar.adapters;
 
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
@@ -35,7 +35,7 @@ public class EventAdapter extends ListAdapter<Event, EventAdapter.EventViewHolde
     }
 
     @Override
-    protected Event getItem(int position) {
+    public Event getItem(int position) {
         return super.getItem(position);
     }
 

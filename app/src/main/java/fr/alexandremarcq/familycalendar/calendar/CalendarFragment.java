@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import org.jetbrains.annotations.NotNull;
 
 import fr.alexandremarcq.familycalendar.R;
+import fr.alexandremarcq.familycalendar.adapters.EventAdapter;
 import fr.alexandremarcq.familycalendar.database.CalendarDatabase;
 import fr.alexandremarcq.familycalendar.databinding.FragmentCalendarBinding;
 import fr.alexandremarcq.familycalendar.utils.ItemClickSupport;

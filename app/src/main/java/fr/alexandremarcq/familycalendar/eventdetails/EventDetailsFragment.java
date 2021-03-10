@@ -22,6 +22,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import fr.alexandremarcq.familycalendar.R;
 import fr.alexandremarcq.familycalendar.database.CalendarDatabase;
+import fr.alexandremarcq.familycalendar.database.event.Event;
 import fr.alexandremarcq.familycalendar.databinding.FragmentEventDetailsBinding;
 import fr.alexandremarcq.familycalendar.utils.ViewModelFactory;
 

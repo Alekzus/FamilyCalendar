@@ -7,8 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.DatePicker;
-import android.widget.SpinnerAdapter;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -25,6 +23,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Locale;
 
 import fr.alexandremarcq.familycalendar.R;
+import fr.alexandremarcq.familycalendar.adapters.ContactAdapter;
 import fr.alexandremarcq.familycalendar.database.CalendarDatabase;
 import fr.alexandremarcq.familycalendar.database.person.Person;
 import fr.alexandremarcq.familycalendar.databinding.FragmentAddEventBinding;

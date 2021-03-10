@@ -1,4 +1,4 @@
-package fr.alexandremarcq.familycalendar.addevent;
+package fr.alexandremarcq.familycalendar.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
