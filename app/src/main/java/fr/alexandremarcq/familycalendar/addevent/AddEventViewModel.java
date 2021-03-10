@@ -62,7 +62,6 @@ public class AddEventViewModel extends ViewModel {
     }
 
     public boolean checkConflicts(List<Event> l){
-        System.out.println("Resultat564646 : "+l);
         return !l.isEmpty();
     }
 
